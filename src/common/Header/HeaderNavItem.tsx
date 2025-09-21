@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { textColor } from "../../styles";
+import { textColor as _textColor } from "../../styles";
 import { cn } from "../../utils/helper";
 
 interface HeaderProps {

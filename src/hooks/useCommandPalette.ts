@@ -35,7 +35,7 @@ interface UseCommandPaletteProps {
 }
 
 export const useCommandPalette = ({
-  audioPlayer,
+  audioPlayer: _audioPlayer,
   onItemSelect,
   onClose
 }: UseCommandPaletteProps) => {

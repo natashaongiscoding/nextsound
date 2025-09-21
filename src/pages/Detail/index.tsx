@@ -3,9 +3,9 @@ import { m } from "framer-motion";
 import { useParams } from "react-router-dom";
 
 import { Poster, DetailPageLoader, Error, Section } from "@/common";
-import { Casts, Videos, Genre } from "./components";
+import { Genre } from "./components";
 
-import { useGetShowQuery } from "@/services/MusicAPI";
+import { useGetTrackQuery } from "@/services/MusicAPI";
 import { useMotion } from "@/hooks/useMotion";
 import { mainHeading, maxWidth, paragraph } from "@/styles";
 import { cn, getImageUrl } from "@/utils/helper";
@@ -14,17 +14,17 @@ interface DetailProps {
   audioPlayer?: any;
 }
 
-const Detail = ({ audioPlayer }: DetailProps) => {
+const Detail = ({ audioPlayer: _audioPlayer }: DetailProps) => {
   const { category, id } = useParams();
   const [show, setShow] = useState<Boolean>(false);
   const { fadeDown, staggerContainer } = useMotion();
 
   const {
-    data: movie,
+    data: track,
     isLoading,
     isFetching,
     isError,
-  } = useGetShowQuery({
+  } = useGetTrackQuery({
     category: String(category || ''),
     id: id || '',
   }, {
@@ -33,14 +33,14 @@ const Detail = ({ audioPlayer }: DetailProps) => {
 
   useEffect(() => {
     document.title =
-      (movie?.title || movie?.name) && !isLoading
-        ? movie.title || movie.name
+      (track?.title || track?.name) && !isLoading
+        ? track.title || track.name
         : "NextSound";
 
     return () => {
       document.title = "NextSound";
     };
-  }, [movie?.title, isLoading, movie?.name]);
+  }, [track?.title, isLoading, track?.name]);
 
   // Handle missing URL parameters after hooks
   if (!category || !id) {
@@ -63,9 +63,7 @@ const Detail = ({ audioPlayer }: DetailProps) => {
     overview,
     name,
     genres,
-    videos,
-    credits,
-  } = movie || {};
+  } = track || {};
 
   const backgroundStyle = {
     backgroundImage: `linear-gradient(to top, rgba(0,0,0), rgba(0,0,0,0.98),rgba(0,0,0,0.8) ,rgba(0,0,0,0.4)),url('${getImageUrl(posterPath || '')}'`,
@@ -120,19 +118,17 @@ const Detail = ({ audioPlayer }: DetailProps) => {
               </button>
             </m.p>
 
-            <Casts casts={credits?.cast || []} />
           </m.div>
         </div>
       </section>
 
-      <Videos videos={videos?.results || []} />
 
       <Section
         title={`Similar ${category === "tracks" ? "tracks" : category === "albums" ? "albums" : "music"}`}
         category={String(category)}
         className={`${maxWidth}`}
         id={Number(id)}
-        showSimilarShows
+        showSimilarTracks
       />
     </>
   );

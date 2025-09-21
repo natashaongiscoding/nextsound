@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { ITrack } from '@/types';
-import { mcpAudioService, PreviewTrack } from '@/services/MCPAudioService';
+import { mcpAudioService, PreviewTrack as _PreviewTrack } from '@/services/MCPAudioService';
 
 interface AudioPlayerState {
   currentTrack: ITrack | null;
@@ -258,7 +258,7 @@ export const useAudioPlayer = () => {
         }
       }, 250); // Optimized to match real audio progress updates
     }
-  }, [state.currentTrack?.id, state.volume]); // Removed togglePlay to avoid circular dependency
+  }, [state.currentTrack?.id, state.volume, state.currentTrack?.preview_url, state.isPlaying]); // Added missing dependencies
 
   const togglePlay = useCallback(() => {
     if (!state.currentTrack) return;

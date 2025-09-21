@@ -26,7 +26,7 @@ export const AlbumCard: React.FC<AlbumCardProps> = ({
   album,
   isPlaying = false,
   onPlay,
-  onTrackPlay,
+  onTrackPlay: _onTrackPlay,
   variant = 'detailed',
   className,
   tracks = []

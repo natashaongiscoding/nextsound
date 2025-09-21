@@ -19,7 +19,7 @@ const sortOptions: SortOption[] = [
   { id: 'duration', label: 'Duration', description: 'Shortest first' },
 ];
 
-const SortOptions: React.FC<SortOptionsProps> = ({ category }) => {
+const SortOptions: React.FC<SortOptionsProps> = ({ category: _category }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isOpen, setIsOpen] = React.useState(false);
   const currentSort = searchParams.get('sort') || 'popularity';

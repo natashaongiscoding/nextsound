@@ -5,7 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { MemoryRouter } from 'react-router-dom';
 import React from 'react';
 
-import { useCommandPalette, SearchResult, Command } from '../useCommandPalette';
+import { useCommandPalette, SearchResult, Command as _Command } from '../useCommandPalette';
 import { spotifyApi, useSearchMusicQuery } from '../../services/SpotifyAPI';
 import ThemeProvider from '../../context/themeContext';
 import GlobalProvider from '../../context/globalContext';

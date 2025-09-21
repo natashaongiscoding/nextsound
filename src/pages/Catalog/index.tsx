@@ -7,7 +7,7 @@ import { SkelatonLoader, Error, ErrorBoundary } from "@/common";
 import { TrackCard } from "@/components/ui/TrackCard";
 import { AlbumCard } from "@/components/ui/AlbumCard";
 import { Search, SortOptions, ViewToggle } from "./components";
-import { useGetShowsQuery } from "@/services/MusicAPI";
+import { useGetTracksQuery } from "@/services/MusicAPI";
 import { smallMaxWidth } from "@/styles";
 import { ITrack } from "@/types";
 
@@ -17,7 +17,7 @@ interface CatalogProps {
 
 const Catalog = ({ audioPlayer }: CatalogProps) => {
   const [page, setPage] = useState(1);
-  const [shows, setShows] = useState<ITrack[]>([]);
+  const [tracks, setTracks] = useState<ITrack[]>([]);
   const [isCategoryChanged, setIsCategoryChanged] = useState<boolean>(false);
   const [query, setQuery] = useSearchParams();
   const { category } = useParams();
@@ -28,7 +28,7 @@ const Catalog = ({ audioPlayer }: CatalogProps) => {
   const viewMode = query.get("view") || "grid";
 
 
-  const { data, isLoading, isFetching, isError } = useGetShowsQuery({
+  const { data, isLoading, isFetching, isError } = useGetTracksQuery({
     category,
     page,
     searchQuery,
@@ -65,9 +65,9 @@ const Catalog = ({ audioPlayer }: CatalogProps) => {
       const newResults = sortTracks(data.results, sortBy);
 
       if (page > 1) {
-        setShows((prev) => [...prev, ...newResults]);
+        setTracks((prev) => [...prev, ...newResults]);
       } else {
-        setShows([...newResults]);
+        setTracks([...newResults]);
         setIsCategoryChanged(false);
       }
     }
@@ -79,8 +79,8 @@ const Catalog = ({ audioPlayer }: CatalogProps) => {
         <Search
           setQuery={setQuery}
           isLoading={isLoading || isFetching}
-          hasResults={shows.length > 0}
-          resultsCount={shows.length}
+          hasResults={tracks.length > 0}
+          resultsCount={tracks.length}
         />
 
 
@@ -108,7 +108,7 @@ const Catalog = ({ audioPlayer }: CatalogProps) => {
                   : "space-y-4"
               }
             >
-              {shows?.map((item) => (
+              {tracks?.map((item) => (
                 <div key={item.id}>
                   {category === 'albums' ? (
                     <AlbumCard
@@ -136,7 +136,7 @@ const Catalog = ({ audioPlayer }: CatalogProps) => {
             <div className="my-4">
               <FiLoader className="mx-auto dark:text-gray-300 w-5 h-5 animate-spin" />
             </div>
-          ) : !isError && shows.length > 0 && (
+          ) : !isError && tracks.length > 0 && (
             <div className="w-full flex items-center justify-center mt-8">
               <button
                 type="button"

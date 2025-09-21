@@ -187,7 +187,7 @@ class OfflineCache {
               if (now > item.expiration) {
                 keysToRemove.push(key);
               }
-            } catch (parseError) {
+            } catch (_parseError) {
               // Remove corrupted items
               keysToRemove.push(key);
             }

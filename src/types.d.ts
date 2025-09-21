@@ -91,7 +91,7 @@ export interface ITrack {
   // Search enhancement fields
   genre?: string; // Primary genre for search
   year?: number; // Release year for search
-  // Legacy movie properties for compatibility
+  // Legacy properties for backward compatibility
   title?: string;
 }
 

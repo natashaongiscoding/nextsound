@@ -20,7 +20,7 @@ interface TrackCardProps {
 
 export const TrackCard: React.FC<TrackCardProps> = ({
   track,
-  category,
+  category: _category,
   isPlaying = false,
   onPlay,
   variant = 'detailed',

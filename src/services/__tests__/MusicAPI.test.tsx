@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import React from 'react';
-import { useGetShowsQuery, useGetShowQuery } from '../MusicAPI';
+import { useGetTracksQuery, useGetTrackQuery } from '../MusicAPI';
 import { musicApi } from '../MusicAPI';
 import { spotifyApi } from '../SpotifyAPI';
 import * as mockMusicData from '../../data/mockMusicData';
@@ -49,7 +49,7 @@ describe('MusicAPI Fallback Logic', () => {
     vi.clearAllMocks();
   });
 
-  describe('useGetShowsQuery - Mock Data Mode', () => {
+  describe('useGetTracksQuery - Mock Data Mode', () => {
     it('should use mock data when Spotify API is unavailable', () => {
       const mockData = {
         results: [
@@ -71,7 +71,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowsQuery({ category: 'tracks', type: 'latest' }),
+        () => useGetTracksQuery({ category: 'tracks', type: 'latest' }),
         { wrapper }
       );
 
@@ -83,7 +83,7 @@ describe('MusicAPI Fallback Logic', () => {
     });
 
     it('should handle search queries in mock mode', () => {
-      const mockSearchResults = {
+      const _mockSearchResults = {
         results: [
           {
             id: 'search-result',
@@ -122,7 +122,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowsQuery({ category: 'tracks', searchQuery: 'Harry' }),
+        () => useGetTracksQuery({ category: 'tracks', searchQuery: 'Harry' }),
         { wrapper }
       );
 
@@ -131,7 +131,7 @@ describe('MusicAPI Fallback Logic', () => {
       expect(result.current.data?.results[0].artist).toBe('Harry Styles');
     });
 
-    it('should handle similar shows in mock mode', () => {
+    it('should handle similar tracks in mock mode', () => {
       const mockPopularTracks = {
         results: [
           { id: '1', name: 'Track 1', original_title: 'Track 1', poster_path: 'track1.jpg', overview: 'Track 1 description', backdrop_path: 'track1-backdrop.jpg', artist: 'Artist 1' },
@@ -144,7 +144,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowsQuery({ category: 'tracks', showSimilarShows: true }),
+        () => useGetTracksQuery({ category: 'tracks', showSimilarTracks: true }),
         { wrapper }
       );
 
@@ -165,8 +165,8 @@ describe('MusicAPI Fallback Logic', () => {
       vi.mocked(spotifyApi.useSearchMusicQuery).mockReturnValue(mockSpotifyResponse as any);
 
       const wrapper = createWrapper();
-      const { result } = renderHook(
-        () => useGetShowsQuery({ category: 'tracks', type: 'latest' }),
+      const { result: _result } = renderHook(
+        () => useGetTracksQuery({ category: 'tracks', type: 'latest' }),
         { wrapper }
       );
 
@@ -178,7 +178,7 @@ describe('MusicAPI Fallback Logic', () => {
     });
   });
 
-  describe('useGetShowsQuery - Data Categories', () => {
+  describe('useGetTracksQuery - Data Categories', () => {
     beforeEach(() => {
       vi.mocked(mockMusicData.shouldUseMockData).mockReturnValue(true);
     });
@@ -189,7 +189,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       renderHook(
-        () => useGetShowsQuery({ category: 'tracks', type: 'latest' }),
+        () => useGetTracksQuery({ category: 'tracks', type: 'latest' }),
         { wrapper }
       );
 
@@ -203,7 +203,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       renderHook(
-        () => useGetShowsQuery({ category: 'tracks' }),
+        () => useGetTracksQuery({ category: 'tracks' }),
         { wrapper }
       );
 
@@ -211,7 +211,7 @@ describe('MusicAPI Fallback Logic', () => {
     });
   });
 
-  describe('useGetShowQuery - Individual Track Lookup', () => {
+  describe('useGetTrackQuery - Individual Track Lookup', () => {
     it('should return mock track when found by ID', () => {
       const mockTrack = {
         id: 'test-track-id',
@@ -224,7 +224,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowQuery({ category: 'tracks', id: 'test-track-id' }),
+        () => useGetTrackQuery({ category: 'tracks', id: 'test-track-id' }),
         { wrapper }
       );
 
@@ -240,7 +240,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowQuery({ category: 'tracks', id: 'non-existent-id' }),
+        () => useGetTrackQuery({ category: 'tracks', id: 'non-existent-id' }),
         { wrapper }
       );
 
@@ -257,7 +257,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowQuery({ category: 'tracks', id: '' }),
+        () => useGetTrackQuery({ category: 'tracks', id: '' }),
         { wrapper }
       );
 
@@ -273,7 +273,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       renderHook(
-        () => useGetShowQuery({ category: 'tracks', id: 123 }),
+        () => useGetTrackQuery({ category: 'tracks', id: 123 }),
         { wrapper }
       );
 
@@ -294,8 +294,8 @@ describe('MusicAPI Fallback Logic', () => {
       vi.mocked(spotifyApi.useGetTrackQuery).mockReturnValue(mockSpotifyTrack as any);
 
       const wrapper = createWrapper();
-      const { result } = renderHook(
-        () => useGetShowQuery({ category: 'tracks', id: 'spotify-track-id' }),
+      const { result: _result } = renderHook(
+        () => useGetTrackQuery({ category: 'tracks', id: 'spotify-track-id' }),
         { wrapper }
       );
 
@@ -319,7 +319,7 @@ describe('MusicAPI Fallback Logic', () => {
       // Should not throw, but may return empty results
       expect(() => {
         renderHook(
-          () => useGetShowsQuery({ category: 'tracks', type: 'latest' }),
+          () => useGetTracksQuery({ category: 'tracks', type: 'latest' }),
           { wrapper }
         );
       }).not.toThrow();
@@ -332,7 +332,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       const wrapper = createWrapper();
       const { result } = renderHook(
-        () => useGetShowsQuery({ category: 'tracks', type: 'latest' }),
+        () => useGetTracksQuery({ category: 'tracks', type: 'latest' }),
         { wrapper }
       );
 
@@ -358,7 +358,7 @@ describe('MusicAPI Fallback Logic', () => {
 
       // Render the same query multiple times
       const { rerender } = renderHook(
-        () => useGetShowsQuery({ category: 'tracks', type: 'latest' }),
+        () => useGetTracksQuery({ category: 'tracks', type: 'latest' }),
         { wrapper }
       );
 

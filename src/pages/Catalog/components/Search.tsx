@@ -16,7 +16,7 @@ interface SearchSuggestion {
   type: 'recent' | 'trending' | 'suggestion';
 }
 
-const Search: React.FC<SearchProps> = ({ setQuery, isLoading = false, hasResults = true, resultsCount = 0 }) => {
+const Search: React.FC<SearchProps> = ({ setQuery, isLoading = false, hasResults = true, resultsCount: _resultsCount = 0 }) => {
   const { category } = useParams();
   const [search, setSearch] = useState<string>("");
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);

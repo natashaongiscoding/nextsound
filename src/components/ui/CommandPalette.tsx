@@ -192,7 +192,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     Recent
                   </h3>
                   <div className="space-y-1">
-                    {recentItems.map((item, index) => {
+                    {recentItems.map((item, _index) => {
                       const Icon = getItemIcon(item.type);
                       return (
                         <div

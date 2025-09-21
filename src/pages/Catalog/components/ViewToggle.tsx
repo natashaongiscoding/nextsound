@@ -8,7 +8,7 @@ interface ViewToggleProps {
 
 type ViewMode = 'grid' | 'list';
 
-const ViewToggle: React.FC<ViewToggleProps> = ({ category }) => {
+const ViewToggle: React.FC<ViewToggleProps> = ({ category: _category }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentView = (searchParams.get('view') as ViewMode) || 'grid';
 

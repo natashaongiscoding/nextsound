@@ -5,7 +5,6 @@ import {
   Header,
   Footer,
   SideBar,
-  MediaModal,
   ScrollToTop,
   Loader,
   ErrorBoundary,
@@ -48,7 +47,6 @@ const App = () => {
 
   return (
     <>
-      <MediaModal />
       <SideBar />
       <Header onOpenSearch={() => setIsCommandPaletteOpen(true)} />
       <DemoModeBadge />

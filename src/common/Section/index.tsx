@@ -7,7 +7,7 @@ import { SkelatonLoader } from "../Loader";
 import Error from "../Error";
 import ErrorBoundary, { APIErrorBoundary } from "../ErrorBoundary";
 
-import { useGetShowsQuery } from "@/services/MusicAPI";
+import { useGetTracksQuery } from "@/services/MusicAPI";
 import { cn, getErrorMessage } from "@/utils/helper";
 import { ITrack } from "@/types";
 
@@ -17,7 +17,7 @@ interface SectionProps {
   className?: string;
   type?: string;
   id?: number;
-  showSimilarShows?: boolean;
+  showSimilarTracks?: boolean;
 }
 
 const Section: FC<SectionProps> = ({
@@ -26,7 +26,7 @@ const Section: FC<SectionProps> = ({
   className,
   type,
   id,
-  showSimilarShows,
+  showSimilarTracks,
 }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const [allTracks, setAllTracks] = useState<ITrack[]>([]);
@@ -41,12 +41,12 @@ const Section: FC<SectionProps> = ({
     isLoading,
     isError,
     error,
-  } = useGetShowsQuery(
+  } = useGetTracksQuery(
     {
       category,
       type,
       page: 1,
-      showSimilarShows,
+      showSimilarTracks,
       id,
       cacheKey: `${title}-1`,
     },

@@ -22,7 +22,7 @@ const genreOptions: GenreOption[] = [
   { id: 'jazz', label: 'Jazz', query: 'jazz smooth' },
 ];
 
-const GenreFilter: React.FC<GenreFilterProps> = ({ category }) => {
+const GenreFilter: React.FC<GenreFilterProps> = ({ category: _category }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentGenre = searchParams.get('genre') || 'all';
 

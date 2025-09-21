@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi as _vi, beforeEach } from 'vitest';
 import { server } from '../server';
 import { http, HttpResponse } from 'msw';
 import { MOCK_LATEST_HITS } from '@/data/mockMusicData';

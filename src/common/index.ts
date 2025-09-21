@@ -2,7 +2,6 @@ import Footer from "./Footer";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import Logo from "./Logo";
-import MediaModal from "./VideoModal";
 import Poster from "./Poster";
 import ScrollToTop from "./ScrollToTop";
 import { SkelatonLoader, Loader, DetailPageLoader } from "./Loader";
@@ -18,7 +17,6 @@ export {
   Header,
   SideBar,
   Logo,
-  MediaModal,
   Poster,
   ScrollToTop,
   SkelatonLoader,

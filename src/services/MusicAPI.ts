@@ -10,18 +10,18 @@ export const musicApi = createApi({
   
   endpoints: (builder) => ({
     // This is just a placeholder - we'll use the Spotify API directly
-    getShows: builder.query<{results: ITrack[]}, {
+    getTracks: builder.query<{results: ITrack[]}, {
       category: string | undefined;
       type?: string;
       page?: number;
       searchQuery?: string;
-      showSimilarShows?: boolean;
+      showSimilarTracks?: boolean;
       id?: number;
     }>({
       query: () => '', // Dummy query since we handle this manually
     }),
 
-    getShow: builder.query<ITrack, { category: string; id: number }>({
+    getTrack: builder.query<ITrack, { category: string; id: number }>({
       query: () => '', // Dummy query since we handle this manually
     }),
   }),
@@ -95,7 +95,7 @@ const performEnhancedSearch = (tracks: ITrack[], searchQuery: string): ITrack[] 
     }
 
     // Multi-term search scoring
-    const allFields = [
+    const _allFields = [
       trackText.name, trackText.title, trackText.original_title,
       trackText.artist, trackText.album, trackText.overview,
       trackText.genre, trackText.year
@@ -155,19 +155,19 @@ const performEnhancedSearch = (tracks: ITrack[], searchQuery: string): ITrack[] 
 };
 
 // Create hooks that provide music data through Spotify API integration
-export const useGetShowsQuery = (
+export const useGetTracksQuery = (
   args: {
     category: string | undefined;
     type?: string;
     page?: number;
     searchQuery?: string;
-    showSimilarShows?: boolean;
+    showSimilarTracks?: boolean;
     id?: number;
     cacheKey?: string; // Add unique cache key
   },
   options?: { skip?: boolean }
 ) => {
-  const { category, type, searchQuery, showSimilarShows } = args;
+  const { category, type, searchQuery, showSimilarTracks } = args;
   const { skip = false } = options || {};
 
   // Check if we should use mock data
@@ -175,12 +175,12 @@ export const useGetShowsQuery = (
 
   // Debug logging
   console.group(`🔧 MusicAPI useGetShowsQuery Debug`);
-  console.log('📊 Query Arguments:', { category, type, searchQuery, showSimilarShows, skip });
+  console.log('📊 Query Arguments:', { category, type, searchQuery, showSimilarTracks, skip });
   console.log('🎭 Mock Data Mode:', useMockData);
   console.groupEnd();
 
   // Early return with mock data if no API available
-  if (useMockData && !searchQuery && !showSimilarShows) {
+  if (useMockData && !searchQuery && !showSimilarTracks) {
     console.log(`🎭 Using mock data for ${category}-${type}`);
     const mockData = getMockData(category || 'tracks', type || 'popular');
     return {
@@ -231,11 +231,11 @@ export const useGetShowsQuery = (
     }
   }
 
-  // Handle similar shows (related content)
-  if (showSimilarShows) {
+  // Handle similar tracks (related content)
+  if (showSimilarTracks) {
     // In mock mode, return a subset of popular tracks
     if (useMockData) {
-      console.log(`🎭 Mock similar shows`);
+      console.log(`🎭 Mock similar tracks`);
       const mockData = getMockData('tracks', 'popular');
       return {
         data: { results: mockData.results.slice(0, 10) },
@@ -470,35 +470,6 @@ export const useGetShowsQuery = (
     };
   }
 
-  // Fallback for unsupported categories (return sample track data)
-  if (category === 'movie' || category === 'tv') {
-    return {
-      data: {
-        results: [
-          {
-            id: '8',
-            spotify_id: '8',
-            poster_path: 'https://i.scdn.co/image/ab67616d0000b273e319baafd16e84f0408af2a0',
-            backdrop_path: 'https://i.scdn.co/image/ab67616d0000b273e319baafd16e84f0408af2a0',
-            original_title: 'As It Was',
-            name: 'As It Was',
-            title: 'As It Was',
-            overview: 'Harry Styles',
-            artist: 'Harry Styles',
-            album: "Harry's House",
-            duration: 167000,
-            preview_url: null,
-            external_urls: {},
-            popularity: 95
-          }
-        ]
-      },
-      isLoading: false,
-      isFetching: false,
-      isError: false,
-      error: undefined
-    } as any;
-  }
 
 
   // Default fallback - empty results
@@ -513,7 +484,7 @@ export const useGetShowsQuery = (
   } as any;
 };
 
-export const useGetShowQuery = (
+export const useGetTrackQuery = (
   args: { category: string; id: number | string },
   options?: { skip?: boolean }
 ) => {
@@ -580,9 +551,7 @@ export const useGetShowQuery = (
         duration: 0,
         preview_url: null,
         title: albumQuery.data.name,
-        genres: [],
-        videos: { results: [] },
-        credits: { cast: [] }
+        genres: []
       } : undefined
     };
   } else if (category === 'artists') {
@@ -597,9 +566,7 @@ export const useGetShowQuery = (
         duration: 0,
         preview_url: null,
         title: artistQuery.data.name,
-        genres: artistQuery.data.genres || [],
-        videos: { results: [] },
-        credits: { cast: [] }
+        genres: artistQuery.data.genres || []
       } : undefined
     };
   }

@@ -1,27 +1,15 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 import HeroSlide from "./HeroSlide";
-import { useGlobalContext } from "@/context/globalContext";
 import { ITrack } from "@/types";
 import { getImageUrl } from "@/utils/helper";
 
 const Hero = ({ tracks }: { tracks: ITrack[] }) => {
-  const { isModalOpen } = useGlobalContext();
-
   const swiperRef = useRef<any>(null);
 
-  useEffect(() => {
-    const swiper = swiperRef.current?.swiper;
-    if (!swiper) return;
-
-    if (isModalOpen) {
-      swiper.autoplay?.stop();
-    } else {
-      swiper.autoplay?.start();
-    }
-  }, [isModalOpen]);
+  // Note: Modal functionality removed - autoplay runs continuously
 
   return (
     <Swiper
