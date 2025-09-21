@@ -25,6 +25,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/6dOtVTDdiauQNBQEDOtlAB"
     },
     popularity: 98,
+    genre: "Alternative Pop",
+    year: 2024,
   },
   // Taylor Swift - Global Top Artist 2024
   {
@@ -44,6 +46,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/1BxfuPKGuaTgP7aM0Bbdwr"
     },
     popularity: 96,
+    genre: "Pop",
+    year: 2019,
   },
   // Harry Styles - Record-breaking hit
   {
@@ -63,6 +67,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/4LRPiXqCikLlN15c3yImP7"
     },
     popularity: 95,
+    genre: "Pop Rock",
+    year: 2022,
   },
   // Sabrina Carpenter - 2024 Summer Hit
   {
@@ -82,6 +88,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/2plbrEY59IikOBgBGLjaoe"
     },
     popularity: 94,
+    genre: "Pop",
+    year: 2024,
   },
   // Bruno Mars & Lady Gaga - 2024 Collaboration
   {
@@ -101,6 +109,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/2plbrEY59IikOBgBGLjaoe"
     },
     popularity: 93,
+    genre: "Pop",
+    year: 2024,
   },
   // SZA - R&B Sensation
   {
@@ -120,6 +130,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/1Qrg8KqiBpW07V7PNxwwwL"
     },
     popularity: 92,
+    genre: "R&B",
+    year: 2022,
   },
   // Olivia Rodrigo - 5.85 billion streams in 2024
   {
@@ -139,6 +151,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/4ZtFanR9U6ndgddUvNcjcG"
     },
     popularity: 91,
+    genre: "Pop Punk",
+    year: 2021,
   },
   // Dua Lipa - 5.74 billion streams in 2024
   {
@@ -158,6 +172,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/39LLxExYz6ewLAcYrzQQyP"
     },
     popularity: 90,
+    genre: "Dance Pop",
+    year: 2020,
   },
   // The Weeknd - Global superstar
   {
@@ -177,6 +193,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/2dHHgzDwk4BJdRwy9uXhTO"
     },
     popularity: 89,
+    genre: "Hip Hop",
+    year: 2022,
   },
   // Ed Sheeran - Global phenomenon
   {
@@ -196,6 +214,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/7qiZfU4dY1lWllzX7mPBI3"
     },
     popularity: 88,
+    genre: "Pop",
+    year: 2017,
   },
   // Miley Cyrus - 2023 comeback hit
   {
@@ -215,6 +235,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/0yLdNVWF3Srea0uzk55zFn"
     },
     popularity: 87,
+    genre: "Pop",
+    year: 2023,
   },
   // Post Malone - Multi-billion stream artist
   {
@@ -234,6 +256,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/3a1lNhkSLSkpJE4MSHpDu9"
     },
     popularity: 86,
+    genre: "Hip Hop",
+    year: 2018,
   },
   // Teddy Swims - #1 Hit 2023-2024
   {
@@ -253,6 +277,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/17phhZDn6oGtzMe56NuWvj"
     },
     popularity: 95,
+    genre: "Soul",
+    year: 2023,
   },
   // Mitski - Indie breakthrough hit
   {
@@ -272,6 +298,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/3vkCueOmm7xQDoJ17W1Pm3"
     },
     popularity: 88,
+    genre: "Indie Folk",
+    year: 2023,
   },
   // Morgan Wallen - Country megastar
   {
@@ -291,6 +319,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/7K3BhSpAxZBznislvUMVtn"
     },
     popularity: 94,
+    genre: "Country",
+    year: 2023,
   },
   // FIFTY FIFTY - K-pop viral sensation
   {
@@ -310,6 +340,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/4dKa5ZzlGqUy3Wo0yaXKNI"
     },
     popularity: 87,
+    genre: "K-Pop",
+    year: 2023,
   },
   // Bad Bunny - Latin superstar
   {
@@ -329,6 +361,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/6Sq7ltF9oHo0f0L7Qm5IGV"
     },
     popularity: 83,
+    genre: "Latin Trap",
+    year: 2022,
   },
   // PinkPantheress - Viral UK artist
   {
@@ -348,6 +382,8 @@ export const MOCK_LATEST_HITS: ITrack[] = [
       spotify: "https://open.spotify.com/track/1bDbXMyjaUIooNwFE9wn0N"
     },
     popularity: 82,
+    genre: "UK Garage",
+    year: 2023,
   }
 ];
 
@@ -370,6 +406,8 @@ export const MOCK_POPULAR_TRACKS: ITrack[] = [
       spotify: "https://open.spotify.com/track/4u7EnebtmKWzUH433cf5Qv"
     },
     popularity: 83,
+    genre: "Alternative Rock",
+    year: 2004,
   },
   {
     id: "60nZcImufyMA1MKQY3dcCH",
@@ -388,6 +426,8 @@ export const MOCK_POPULAR_TRACKS: ITrack[] = [
       spotify: "https://open.spotify.com/track/60nZcImufyMA1MKQY3dcCH"
     },
     popularity: 81,
+    genre: "Classic Rock",
+    year: 1969,
   },
   {
     id: "2ye2Wgw4gimLv2eAKyk1NB",
@@ -406,6 +446,8 @@ export const MOCK_POPULAR_TRACKS: ITrack[] = [
       spotify: "https://open.spotify.com/track/2ye2Wgw4gimLv2eAKyk1NB"
     },
     popularity: 86,
+    genre: "Pop Rock",
+    year: 2019,
   },
   {
     id: "6f70bfcAe3BPKCljHvBw66",
@@ -424,6 +466,8 @@ export const MOCK_POPULAR_TRACKS: ITrack[] = [
       spotify: "https://open.spotify.com/track/6f70bfcAe3BPKCljHvBw66"
     },
     popularity: 84,
+    genre: "Soul",
+    year: 2011,
   },
   {
     id: "4uLU6hMCjMI75M1A2tKUQC",
@@ -442,6 +486,8 @@ export const MOCK_POPULAR_TRACKS: ITrack[] = [
       spotify: "https://open.spotify.com/track/4uLU6hMCjMI75M1A2tKUQC"
     },
     popularity: 79,
+    genre: "Synthpop",
+    year: 1987,
   }
 ];
 

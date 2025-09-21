@@ -88,6 +88,9 @@ export interface ITrack {
     spotify: string;
   };
   popularity?: number; // Spotify popularity score (0-100)
+  // Search enhancement fields
+  genre?: string; // Primary genre for search
+  year?: number; // Release year for search
   // Legacy movie properties for compatibility
   title?: string;
 }

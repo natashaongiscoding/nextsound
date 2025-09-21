@@ -27,6 +27,133 @@ export const musicApi = createApi({
   }),
 });
 
+// Enhanced search algorithm for mock data
+const performEnhancedSearch = (tracks: ITrack[], searchQuery: string): ITrack[] => {
+  if (!searchQuery || !tracks.length) return [];
+
+  const query = searchQuery.toLowerCase().trim();
+  const searchTerms = query.split(/\s+/).filter(term => term.length > 0);
+
+  console.log(`🔍 Enhanced search: "${query}" -> [${searchTerms.join(', ')}]`);
+
+  // Check if search is year-based
+  const yearMatch = query.match(/\b(19|20)\d{2}\b/);
+  const searchYear = yearMatch ? parseInt(yearMatch[0]) : null;
+
+  const scoredResults: Array<{ track: ITrack; score: number }> = [];
+
+  tracks.forEach(track => {
+    let score = 0;
+    const trackText = {
+      name: track.name?.toLowerCase() || '',
+      title: track.title?.toLowerCase() || '',
+      original_title: track.original_title?.toLowerCase() || '',
+      artist: track.artist?.toLowerCase() || '',
+      album: track.album?.toLowerCase() || '',
+      overview: track.overview?.toLowerCase() || '',
+      genre: track.genre?.toLowerCase() || '',
+      year: track.year?.toString() || ''
+    };
+
+    // Exact match bonuses (highest priority)
+    if (trackText.name === query || trackText.title === query) score += 100;
+    if (trackText.artist === query) score += 90;
+    if (trackText.album === query) score += 80;
+    if (trackText.genre === query) score += 70;
+
+    // Year-based search
+    if (searchYear && track.year === searchYear) {
+      score += 85;
+      console.log(`🗓️ Year match: ${track.name} (${track.year}) +85`);
+    }
+
+    // Genre-based search with flexible matching
+    const genreAliases: Record<string, string[]> = {
+      'pop': ['pop', 'alternative pop', 'dance pop', 'synthpop'],
+      'rock': ['rock', 'pop rock', 'alternative rock', 'classic rock'],
+      'hip hop': ['hip hop', 'hip-hop', 'rap', 'latin trap'],
+      'r&b': ['r&b', 'rnb', 'soul'],
+      'electronic': ['electronic', 'dance', 'edm', 'synthpop'],
+      'country': ['country'],
+      'indie': ['indie', 'indie folk', 'indie rock'],
+      'folk': ['folk', 'indie folk'],
+      'punk': ['punk', 'pop punk'],
+      'garage': ['garage', 'uk garage'],
+      'k-pop': ['k-pop', 'kpop'],
+      'latin': ['latin', 'latin trap']
+    };
+
+    // Check for genre matches
+    for (const [searchGenre, aliases] of Object.entries(genreAliases)) {
+      if (query.includes(searchGenre)) {
+        if (aliases.some(alias => trackText.genre.includes(alias))) {
+          score += 75;
+          console.log(`🎵 Genre match: ${track.name} (${track.genre}) for "${searchGenre}" +75`);
+          break;
+        }
+      }
+    }
+
+    // Multi-term search scoring
+    const allFields = [
+      trackText.name, trackText.title, trackText.original_title,
+      trackText.artist, trackText.album, trackText.overview,
+      trackText.genre, trackText.year
+    ].join(' ');
+
+    searchTerms.forEach(term => {
+      // Title/Name matches
+      if (trackText.name.includes(term) || trackText.title.includes(term)) score += 50;
+      if (trackText.original_title.includes(term)) score += 45;
+
+      // Artist matches
+      if (trackText.artist.includes(term)) score += 40;
+
+      // Album matches
+      if (trackText.album.includes(term)) score += 30;
+
+      // Genre matches
+      if (trackText.genre.includes(term)) score += 35;
+
+      // Overview matches
+      if (trackText.overview.includes(term)) score += 15;
+
+      // Year matches
+      if (trackText.year.includes(term)) score += 25;
+    });
+
+    // Partial word matching bonus
+    searchTerms.forEach(term => {
+      if (term.length >= 3) {
+        if (trackText.name.includes(term) || trackText.artist.includes(term)) {
+          score += 20;
+        }
+      }
+    });
+
+    // Popularity boost for better user experience
+    if (track.popularity && track.popularity > 85) score += 10;
+    if (track.popularity && track.popularity > 90) score += 5;
+
+    if (score > 0) {
+      console.log(`📊 "${track.name}" by ${track.artist}: score = ${score}`);
+      scoredResults.push({ track, score });
+    }
+  });
+
+  // Sort by score (descending) and return tracks
+  const sortedResults = scoredResults
+    .sort((a, b) => b.score - a.score)
+    .map(item => item.track);
+
+  console.log(`🎯 Final results: ${sortedResults.length} tracks`);
+  if (sortedResults.length > 0) {
+    console.log(`🏆 Top result: "${sortedResults[0].name}" by ${sortedResults[0].artist}`);
+  }
+
+  return sortedResults;
+};
+
 // Create hooks that provide music data through Spotify API integration
 export const useGetShowsQuery = (
   args: {
@@ -69,13 +196,17 @@ export const useGetShowsQuery = (
   if (searchQuery) {
     // In mock mode, return filtered mock data for search
     if (useMockData) {
-      console.log(`🎭 Mock search for: "${searchQuery}"`);
-      const allMockData = getMockData('tracks', 'popular');
-      const searchResults = allMockData.results.filter(track =>
-        track.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        track.artist?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        track.album?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      console.log(`🎭 Enhanced mock search for: "${searchQuery}"`);
+
+      // Get comprehensive mock data from all sources
+      const latestHits = getMockData('tracks', 'latest');
+      const popularTracks = getMockData('tracks', 'popular');
+      const allTracks = [...latestHits.results, ...popularTracks.results];
+
+      // Enhanced search algorithm
+      const searchResults = performEnhancedSearch(allTracks, searchQuery);
+
+      console.log(`🎭 Search results: ${searchResults.length} tracks found for "${searchQuery}"`);
       return {
         data: { results: searchResults },
         isLoading: false,
